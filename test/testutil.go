@@ -1,6 +1,10 @@
 package test
 
-import boldshopify "github.com/bold-commerce/go-shopify/v4"
+import (
+	"math/rand"
+
+	boldshopify "github.com/bold-commerce/go-shopify/v4"
+)
 
 const (
 	ApiKey          = ""
@@ -22,9 +26,9 @@ func NewApp() *boldshopify.App {
 	}
 }
 
-func NewClient() *boldshopify.Client {
+func NewClient() (*boldshopify.Client, error) {
 	app := NewApp()
-	return boldshopify.MustNewClient(
+	return boldshopify.NewClient(
 		*app,
 		MyshopifyDomain,
 		ShopToken,
@@ -33,4 +37,14 @@ func NewClient() *boldshopify.Client {
 		}),
 		boldshopify.WithVersion(Version),
 	)
+}
+
+var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+
+func RandString(n int) string {
+	b := make([]rune, n)
+	for i := range b {
+		b[i] = letters[rand.Intn(len(letters))]
+	}
+	return string(b)
 }
