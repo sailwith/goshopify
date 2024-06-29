@@ -9,7 +9,7 @@ import (
 )
 
 func TestDiscountCodeBasicCreate(t *testing.T) {
-	v := v{}
+	v := DiscountCodeBasicCreateVariable{}
 	v.BasicCodeDiscount.Title = "123"
 	v.BasicCodeDiscount.CustomerGets.Value.Percentage = 0.1
 	v.BasicCodeDiscount.CustomerGets.Items.All = true

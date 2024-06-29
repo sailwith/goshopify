@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-const q = `
+const discountCodeBasicCreateQuery = `
 mutation discountCodeBasicCreate($basicCodeDiscount: DiscountCodeBasicInput!) {
   discountCodeBasicCreate(basicCodeDiscount: $basicCodeDiscount) {
     codeDiscountNode {
@@ -19,7 +19,7 @@ mutation discountCodeBasicCreate($basicCodeDiscount: DiscountCodeBasicInput!) {
   }
 }`
 
-type v struct {
+type DiscountCodeBasicCreateVariable struct {
 	BasicCodeDiscount struct {
 		Code         string `json:"code"`
 		CustomerGets struct {
@@ -44,7 +44,7 @@ type v struct {
 	} `json:"basicCodeDiscount"`
 }
 
-type resp struct {
+type discountCodeBasicCreateResponse struct {
 	DiscountCodeBasicCreate struct {
 		CodeDiscountNode struct {
 			ID string `json:"id"`
@@ -57,9 +57,9 @@ type resp struct {
 	} `json:"discountCodeBasicCreate"`
 }
 
-func (g *GraphQL) DiscountCodeBasicCreate(ctx context.Context, variable v) (*resp, error) {
-	resp := new(resp)
-	if err := g.client.GraphQL.Query(ctx, q, variable, resp); err != nil {
+func (g *GraphQL) DiscountCodeBasicCreate(ctx context.Context, variable DiscountCodeBasicCreateVariable) (*discountCodeBasicCreateResponse, error) {
+	resp := new(discountCodeBasicCreateResponse)
+	if err := g.client.GraphQL.Query(ctx, discountCodeBasicCreateQuery, variable, resp); err != nil {
 		return nil, err
 	}
 
