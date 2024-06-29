@@ -17,7 +17,10 @@ func TestDiscountCodeBasicCreate(t *testing.T) {
 	v.BasicCodeDiscount.CustomerSelection.All = true
 	v.BasicCodeDiscount.StartsAt = time.Now()
 	v.BasicCodeDiscount.Code = "11"
-	client := test.NewClient()
+	client, err := test.NewClient()
+	if err != nil {
+		t.Error(err)
+	}
 	graphQL := NewGraphQL(client)
 	resp, err := graphQL.DiscountCodeBasicCreate(context.Background(), v)
 	if err != nil {

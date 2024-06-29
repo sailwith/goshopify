@@ -8,7 +8,10 @@ import (
 )
 
 func TestShopGet(t *testing.T) {
-	client := test.NewClient()
+	client, err := test.NewClient()
+	if err != nil {
+		t.Error(err)
+	}
 	rest := NewREST(client)
 	shop, err := rest.ShopGet(context.Background())
 	if err != nil {

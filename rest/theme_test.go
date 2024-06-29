@@ -8,7 +8,10 @@ import (
 )
 
 func TestThemeList(t *testing.T) {
-	client := test.NewClient()
+	client, err := test.NewClient()
+	if err != nil {
+		t.Error(err)
+	}
 	rest := NewREST(client)
 	themes, err := rest.ThemeList(context.Background())
 	if err != nil {
@@ -21,7 +24,10 @@ func TestThemeList(t *testing.T) {
 }
 
 func TestThemeMain(t *testing.T) {
-	client := test.NewClient()
+	client, err := test.NewClient()
+	if err != nil {
+		t.Error(err)
+	}
 	rest := NewREST(client)
 	theme, err := rest.ThemeMain(context.Background())
 	if err != nil {

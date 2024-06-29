@@ -8,7 +8,10 @@ import (
 )
 
 func TestIsAppEmbedded(t *testing.T) {
-	client := test.NewClient()
+	client, err := test.NewClient()
+	if err != nil {
+		t.Error(err)
+	}
 	rest := NewREST(client)
 	embedded, err := rest.IsAppEmbedded(context.Background(), test.BlockID)
 	if err != nil {

@@ -44,8 +44,8 @@ func NewApp(cfg AppConfig) *App {
 	}
 }
 
-func (app *App) NewClient(shopName string, token string) *client {
-	instance := boldshopify.MustNewClient(
+func (app *App) NewClient(shopName string, token string) (*client, error) {
+	instance, err := boldshopify.NewClient(
 		app.instance,
 		shopName,
 		token,
@@ -55,11 +55,14 @@ func (app *App) NewClient(shopName string, token string) *client {
 		}),
 		boldshopify.WithVersion(app.Version),
 	)
+	if err != nil {
+		return nil, err
+	}
 
 	return &client{
 		REST:    rest.NewREST(instance),
 		GraphQL: graphql.NewGraphQL(instance),
-	}
+	}, nil
 }
 
 // AuthorizeURL generates the authorization URL for the Shopify app.

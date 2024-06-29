@@ -8,7 +8,10 @@ import (
 )
 
 func TestAssetGet(t *testing.T) {
-	client := test.NewClient()
+	client, err := test.NewClient()
+	if err != nil {
+		t.Error(err)
+	}
 	rest := NewREST(client)
 	mainTheme, err := rest.ThemeMain(context.Background())
 	if err != nil {

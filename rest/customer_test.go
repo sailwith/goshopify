@@ -19,7 +19,10 @@ func randString(n int) string {
 }
 
 func TestCustomerCreate(t *testing.T) {
-	client := test.NewClient()
+	client, err := test.NewClient()
+	if err != nil {
+		t.Error(err)
+	}
 	rest := NewREST(client)
 	customer, err := rest.CustomerCreate(context.Background(), Customer{
 		Email: randString(8) + "@gmail.com",
@@ -31,7 +34,10 @@ func TestCustomerCreate(t *testing.T) {
 }
 
 func TestCustomerSearch(t *testing.T) {
-	client := test.NewClient()
+	client, err := test.NewClient()
+	if err != nil {
+		t.Error(err)
+	}
 	rest := NewREST(client)
 	customers, err := rest.CustomerSearch(context.Background(), "email:111@gmail.com")
 	if err != nil {
@@ -41,7 +47,10 @@ func TestCustomerSearch(t *testing.T) {
 }
 
 func TestCustomerUpdate(t *testing.T) {
-	client := test.NewClient()
+	client, err := test.NewClient()
+	if err != nil {
+		t.Error(err)
+	}
 	rest := NewREST(client)
 	c, err := rest.CustomerUpdate(context.Background(), Customer{
 		Id:        7233840578864,
@@ -54,7 +63,10 @@ func TestCustomerUpdate(t *testing.T) {
 }
 
 func TestCustomerCreateOrUpdate(t *testing.T) {
-	client := test.NewClient()
+	client, err := test.NewClient()
+	if err != nil {
+		t.Error(err)
+	}
 	rest := NewREST(client)
 	c, err := rest.CustomerCreateOrUpdate(context.Background(), Customer{
 		Email:    "111@gmail.com",
