@@ -19,6 +19,11 @@ mutation discountCodeBasicCreate($basicCodeDiscount: DiscountCodeBasicInput!) {
   }
 }`
 
+type DiscountAmount struct {
+	Amount            float64 `json:"amount"`
+	AppliesOnEachItem bool    `json:"appliesOnEachItem"`
+}
+
 type DiscountCodeBasicCreateVariable struct {
 	BasicCodeDiscount struct {
 		Code         string `json:"code"`
@@ -27,11 +32,8 @@ type DiscountCodeBasicCreateVariable struct {
 				All bool `json:"all"`
 			} `json:"items"`
 			Value struct {
-				DiscountAmount *struct {
-					Amount            float64 `json:"amount"`
-					AppliesOnEachItem bool    `json:"appliesOnEachItem"`
-				} `json:"discountAmount,omitempty"`
-				Percentage float64 `json:"percentage,omitempty"`
+				DiscountAmount *DiscountAmount `json:"discountAmount,omitempty"`
+				Percentage     float64         `json:"percentage,omitempty"`
 			} `json:"value"`
 		} `json:"customerGets"`
 		CustomerSelection struct {
