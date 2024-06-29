@@ -44,7 +44,7 @@ type DiscountCodeBasicCreateVariable struct {
 	} `json:"basicCodeDiscount"`
 }
 
-type discountCodeBasicCreateResponse struct {
+type DiscountCodeBasicCreateResponse struct {
 	DiscountCodeBasicCreate struct {
 		CodeDiscountNode struct {
 			ID string `json:"id"`
@@ -57,8 +57,8 @@ type discountCodeBasicCreateResponse struct {
 	} `json:"discountCodeBasicCreate"`
 }
 
-func (g *GraphQL) DiscountCodeBasicCreate(ctx context.Context, variable DiscountCodeBasicCreateVariable) (*discountCodeBasicCreateResponse, error) {
-	resp := new(discountCodeBasicCreateResponse)
+func (g *GraphQL) DiscountCodeBasicCreate(ctx context.Context, variable DiscountCodeBasicCreateVariable) (*DiscountCodeBasicCreateResponse, error) {
+	resp := new(DiscountCodeBasicCreateResponse)
 	if err := g.client.GraphQL.Query(ctx, discountCodeBasicCreateQuery, variable, resp); err != nil {
 		return nil, err
 	}
