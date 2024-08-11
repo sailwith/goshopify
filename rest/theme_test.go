@@ -5,34 +5,29 @@ import (
 	"testing"
 
 	"github.com/sailwith/goshopify/test"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestThemeList(t *testing.T) {
 	client, err := test.NewClient()
-	if err != nil {
-		t.Error(err)
-	}
+	assert.NoError(t, err)
+
 	rest := NewREST(client)
 	themes, err := rest.ThemeList(context.Background())
-	if err != nil {
-		t.Error(err)
-	}
-
-	for _, v := range themes {
-		t.Logf("theme id: %v, name: %v, role: %v", v.Id, v.Name, v.Role)
+	if assert.NoError(t, err) {
+		for _, v := range themes {
+			t.Logf("theme id: %v, name: %v, role: %v", v.Id, v.Name, v.Role)
+		}
 	}
 }
 
 func TestThemeMain(t *testing.T) {
 	client, err := test.NewClient()
-	if err != nil {
-		t.Error(err)
-	}
+	assert.NoError(t, err)
+
 	rest := NewREST(client)
 	theme, err := rest.ThemeMain(context.Background())
-	if err != nil {
-		t.Error(err)
+	if assert.NoError(t, err) {
+		t.Logf("theme id: %v, name: %v, role: %v", theme.Id, theme.Name, theme.Role)
 	}
-
-	t.Logf("theme id: %v, name: %v, role: %v", theme.Id, theme.Name, theme.Role)
 }

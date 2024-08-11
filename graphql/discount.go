@@ -39,10 +39,11 @@ type DiscountCodeBasicCreateVariable struct {
 		CustomerSelection struct {
 			All bool `json:"all"`
 		} `json:"customerSelection"`
-		StartsAt               time.Time `json:"startsAt"`
-		Title                  string    `json:"title"`
-		AppliesOncePerCustomer bool      `json:"appliesOncePerCustomer"`
-		UsageLimit             int       `json:"usageLimit"`
+		StartsAt               time.Time  `json:"startsAt"`
+		EndsAt                 *time.Time `json:"endsAt"`
+		Title                  string     `json:"title"`
+		AppliesOncePerCustomer bool       `json:"appliesOncePerCustomer"`
+		UsageLimit             int        `json:"usageLimit"`
 	} `json:"basicCodeDiscount"`
 }
 

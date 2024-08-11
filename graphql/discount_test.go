@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/sailwith/goshopify/test"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestDiscountCodeBasicCreate(t *testing.T) {
@@ -16,19 +17,21 @@ func TestDiscountCodeBasicCreate(t *testing.T) {
 	v.BasicCodeDiscount.CustomerGets.Items.All = true
 	v.BasicCodeDiscount.UsageLimit = 1
 	v.BasicCodeDiscount.CustomerSelection.All = true
+
+	startsAt := time.Now()
+	endsAt := startsAt.Add(24 * time.Hour)
 	v.BasicCodeDiscount.StartsAt = time.Now()
+	v.BasicCodeDiscount.EndsAt = &endsAt
 	v.BasicCodeDiscount.Code = code
 	v.BasicCodeDiscount.AppliesOncePerCustomer = true
 	client, err := test.NewClient()
-	if err != nil {
-		t.Error(err)
-	}
+	assert.NoError(t, err)
+
 	graphQL := NewGraphQL(client)
 	resp, err := graphQL.DiscountCodeBasicCreate(context.Background(), v)
-	if err != nil {
-		t.Error(err)
+	if assert.NoError(t, err) {
+		t.Log(resp.DiscountCodeBasicCreate.CodeDiscountNode.ID)
 	}
-	t.Log(resp.DiscountCodeBasicCreate.CodeDiscountNode.ID)
 
 	code = test.RandString(8)
 	v = DiscountCodeBasicCreateVariable{}
@@ -39,13 +42,12 @@ func TestDiscountCodeBasicCreate(t *testing.T) {
 		AppliesOnEachItem: false,
 	}
 	v.BasicCodeDiscount.CustomerSelection.All = true
-	v.BasicCodeDiscount.StartsAt = time.Now()
+	v.BasicCodeDiscount.StartsAt = startsAt
 	v.BasicCodeDiscount.Title = code
 	v.BasicCodeDiscount.AppliesOncePerCustomer = true
 	v.BasicCodeDiscount.UsageLimit = 1
 	resp, err = graphQL.DiscountCodeBasicCreate(context.Background(), v)
-	if err != nil {
-		t.Error(err)
+	if assert.NoError(t, err) {
+		t.Log(resp.DiscountCodeBasicCreate.CodeDiscountNode.ID)
 	}
-	t.Log(resp.DiscountCodeBasicCreate.CodeDiscountNode.ID)
 }

@@ -5,22 +5,19 @@ import (
 	"testing"
 
 	"github.com/sailwith/goshopify/test"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestAssetGet(t *testing.T) {
 	client, err := test.NewClient()
-	if err != nil {
-		t.Error(err)
-	}
+	assert.NoError(t, err)
+
 	rest := NewREST(client)
 	mainTheme, err := rest.ThemeMain(context.Background())
-	if err != nil {
-		t.Error(err)
-	}
+	assert.NoError(t, err)
 
 	asset, err := rest.AssetGet(context.Background(), mainTheme.Id, "config/settings_data.json")
-	if err != nil {
-		t.Error(err)
+	if assert.NoError(t, err) {
+		t.Log(asset.Key)
 	}
-	t.Log(asset.Key)
 }

@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/sailwith/goshopify/test"
+	"github.com/stretchr/testify/assert"
 )
 
 func newApp() *App {
@@ -19,17 +20,15 @@ func newApp() *App {
 func TestAuthorizeURL(t *testing.T) {
 	app := newApp()
 	url, err := app.AuthorizeURL(test.MyshopifyDomain, "state")
-	if err != nil {
-		t.Error(err)
+	if assert.NoError(t, err) {
+		t.Log(url)
 	}
-	t.Log(url)
 }
 
 func TestEmbeddedAppURL(t *testing.T) {
 	app := newApp()
 	url, err := app.EmbeddedAppURL("YWRtaW4uc2hvcGlmeS5jb20vc3RvcmUvZXhhbXBsZQ")
-	if err != nil {
-		t.Error(err)
+	if assert.NoError(t, err) {
+		t.Log(url)
 	}
-	t.Log(url)
 }

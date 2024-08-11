@@ -5,17 +5,16 @@ import (
 	"testing"
 
 	"github.com/sailwith/goshopify/test"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestShopGet(t *testing.T) {
 	client, err := test.NewClient()
-	if err != nil {
-		t.Error(err)
-	}
+	assert.NoError(t, err)
+
 	rest := NewREST(client)
 	shop, err := rest.ShopGet(context.Background())
-	if err != nil {
-		t.Error(err)
+	if assert.NoError(t, err) {
+		t.Log(shop.MyshopifyDomain)
 	}
-	t.Log(shop.MyshopifyDomain)
 }

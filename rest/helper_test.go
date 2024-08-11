@@ -5,17 +5,16 @@ import (
 	"testing"
 
 	"github.com/sailwith/goshopify/test"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestIsAppEmbedded(t *testing.T) {
 	client, err := test.NewClient()
-	if err != nil {
-		t.Error(err)
-	}
+	assert.NoError(t, err)
+
 	rest := NewREST(client)
 	embedded, err := rest.IsAppEmbedded(context.Background(), test.BlockID)
-	if err != nil {
-		t.Error(err)
+	if assert.NoError(t, err) {
+		t.Log(embedded)
 	}
-	t.Log(embedded)
 }
