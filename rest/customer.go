@@ -7,6 +7,7 @@ import (
 	boldshopify "github.com/bold-commerce/go-shopify/v4"
 )
 
+type EmailMarketingConsent = boldshopify.EmailMarketingConsent
 type Customer = boldshopify.Customer
 
 func (r *REST) CustomerCreate(ctx context.Context, customer Customer) (*Customer, error) {

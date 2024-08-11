@@ -15,6 +15,10 @@ func TestCustomerCreate(t *testing.T) {
 	rest := NewREST(client)
 	customer, err := rest.CustomerCreate(context.Background(), Customer{
 		Email: test.RandString(8) + "@gmail.com",
+		EmailMarketingConsent: &EmailMarketingConsent{
+			State:      "subscribed",
+			OptInLevel: "single_opt_in",
+		},
 	})
 	if assert.NoError(t, err) {
 		t.Log(customer.Id, customer.Email)

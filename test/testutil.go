@@ -14,7 +14,7 @@ const (
 	MyshopifyDomain = "foo.myshopify.com"
 	ShopToken       = ""
 	BlockID         = ""
-	Version         = "2024-01"
+	Version         = "2024-07"
 )
 
 func NewApp() *boldshopify.App {
