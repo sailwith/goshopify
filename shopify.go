@@ -26,7 +26,7 @@ type AppConfig struct {
 	Version     string
 }
 
-type client struct {
+type Client struct {
 	REST    *rest.REST
 	GraphQL *graphql.GraphQL
 	Helper  *helper.Helper
@@ -46,7 +46,7 @@ func NewApp(cfg AppConfig) *App {
 	}
 }
 
-func (app *App) NewClient(shopName string, token string) (*client, error) {
+func (app *App) NewClient(shopName string, token string) (*Client, error) {
 	instance, err := boldshopify.NewClient(
 		app.instance,
 		shopName,
@@ -64,7 +64,7 @@ func (app *App) NewClient(shopName string, token string) (*client, error) {
 	r := rest.NewREST(instance)
 	g := graphql.NewGraphQL(instance)
 
-	return &client{
+	return &Client{
 		REST:    r,
 		GraphQL: g,
 		Helper:  helper.NewHelper(r, g),
