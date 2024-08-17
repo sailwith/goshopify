@@ -7,13 +7,13 @@ import (
 )
 
 const (
-	ApiKey          = ""
-	ApiSecret       = ""
+	ApiKey          = "61b03e068f12323d4973b9ff1b7148c4"
+	ApiSecret       = "7bbe4b0f8310f1e409887ebfa827ff15"
 	RedirectURL     = "http://127.0.0.1:8000/auth/callback"
 	Scope           = "write_customers,write_discounts,read_themes"
-	MyshopifyDomain = "foo.myshopify.com"
-	ShopToken       = ""
-	BlockID         = ""
+	MyshopifyDomain = "spf-dev1.myshopify.com"
+	ShopToken       = "shpua_5d3191367415e7206fcb41e83c71a70b"
+	BlockID         = "1486664396617447524"
 	Version         = "2024-07"
 )
 
@@ -33,7 +33,7 @@ func NewClient() (*boldshopify.Client, error) {
 		MyshopifyDomain,
 		ShopToken,
 		boldshopify.WithLogger(&boldshopify.LeveledLogger{
-			Level: boldshopify.LevelDebug,
+			Level: boldshopify.LevelInfo,
 		}),
 		boldshopify.WithVersion(Version),
 	)

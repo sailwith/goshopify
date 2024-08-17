@@ -9,6 +9,7 @@ import (
 
 	boldshopify "github.com/bold-commerce/go-shopify/v4"
 	"github.com/sailwith/goshopify/graphql"
+	"github.com/sailwith/goshopify/helper"
 	"github.com/sailwith/goshopify/rest"
 )
 
@@ -25,9 +26,10 @@ type AppConfig struct {
 	Version     string
 }
 
-type Client struct {
+type client struct {
 	REST    *rest.REST
 	GraphQL *graphql.GraphQL
+	Helper  *helper.Helper
 }
 
 func NewApp(cfg AppConfig) *App {
@@ -44,14 +46,14 @@ func NewApp(cfg AppConfig) *App {
 	}
 }
 
-func (app *App) NewClient(shopName string, token string) (*Client, error) {
+func (app *App) NewClient(shopName string, token string) (*client, error) {
 	instance, err := boldshopify.NewClient(
 		app.instance,
 		shopName,
 		token,
 		boldshopify.WithRetry(3),
 		boldshopify.WithLogger(&boldshopify.LeveledLogger{
-			Level: boldshopify.LevelDebug,
+			Level: boldshopify.LevelInfo,
 		}),
 		boldshopify.WithVersion(app.Version),
 	)
@@ -59,9 +61,13 @@ func (app *App) NewClient(shopName string, token string) (*Client, error) {
 		return nil, err
 	}
 
-	return &Client{
-		REST:    rest.NewREST(instance),
-		GraphQL: graphql.NewGraphQL(instance),
+	r := rest.NewREST(instance)
+	g := graphql.NewGraphQL(instance)
+
+	return &client{
+		REST:    r,
+		GraphQL: g,
+		Helper:  helper.NewHelper(r, g),
 	}, nil
 }
 

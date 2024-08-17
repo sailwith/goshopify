@@ -1,4 +1,4 @@
-package rest
+package helper
 
 import (
 	"context"
@@ -9,11 +9,8 @@ import (
 )
 
 func TestIsAppEmbedded(t *testing.T) {
-	client, err := test.NewClient()
-	assert.NoError(t, err)
-
-	rest := NewREST(client)
-	embedded, err := rest.IsAppEmbedded(context.Background(), test.BlockID)
+	h := newHelper(t)
+	embedded, err := h.IsAppEmbedded(context.Background(), test.BlockID)
 	if assert.NoError(t, err) {
 		t.Log(embedded)
 	}

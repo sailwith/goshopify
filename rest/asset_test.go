@@ -4,15 +4,11 @@ import (
 	"context"
 	"testing"
 
-	"github.com/sailwith/goshopify/test"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestAssetGet(t *testing.T) {
-	client, err := test.NewClient()
-	assert.NoError(t, err)
-
-	rest := NewREST(client)
+	rest := newREST(t)
 	mainTheme, err := rest.ThemeMain(context.Background())
 	assert.NoError(t, err)
 

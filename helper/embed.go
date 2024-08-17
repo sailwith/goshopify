@@ -1,4 +1,4 @@
-package rest
+package helper
 
 import (
 	"context"
@@ -16,13 +16,13 @@ type settingsData struct {
 	} `json:"current"`
 }
 
-func (r *REST) IsAppEmbedded(ctx context.Context, blockID string) (bool, error) {
-	mainTheme, err := r.ThemeMain(ctx)
+func (h *Helper) IsAppEmbedded(ctx context.Context, blockID string) (bool, error) {
+	mainTheme, err := h.rest.ThemeMain(ctx)
 	if err != nil {
 		return false, fmt.Errorf("error getting main theme: %w", err)
 	}
 
-	asset, err := r.AssetGet(ctx, mainTheme.Id, "config/settings_data.json")
+	asset, err := h.rest.AssetGet(ctx, mainTheme.Id, "config/settings_data.json")
 	if err != nil {
 		return false, fmt.Errorf("error getting asset: %w", err)
 	}

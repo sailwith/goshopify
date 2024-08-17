@@ -9,10 +9,7 @@ import (
 )
 
 func TestCustomerCreate(t *testing.T) {
-	client, err := test.NewClient()
-	assert.NoError(t, err)
-
-	rest := NewREST(client)
+	rest := newREST(t)
 	customer, err := rest.CustomerCreate(context.Background(), Customer{
 		Email: test.RandString(8) + "@gmail.com",
 		EmailMarketingConsent: &EmailMarketingConsent{

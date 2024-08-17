@@ -24,10 +24,8 @@ func TestDiscountCodeBasicCreate(t *testing.T) {
 	v.BasicCodeDiscount.EndsAt = &endsAt
 	v.BasicCodeDiscount.Code = code
 	v.BasicCodeDiscount.AppliesOncePerCustomer = true
-	client, err := test.NewClient()
-	assert.NoError(t, err)
 
-	graphQL := NewGraphQL(client)
+	graphQL := newGraphQL(t)
 	resp, err := graphQL.DiscountCodeBasicCreate(context.Background(), v)
 	if assert.NoError(t, err) {
 		t.Log(resp.DiscountCodeBasicCreate.CodeDiscountNode.ID)
