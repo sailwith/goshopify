@@ -5,13 +5,15 @@ import (
 	"testing"
 	"time"
 
+	"github.com/sailwith/goshopify/graphql/dto"
+	"github.com/sailwith/goshopify/graphql/types"
 	"github.com/sailwith/goshopify/test"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestDiscountCodeBasicCreate(t *testing.T) {
 	code := test.RandString(8)
-	v := DiscountCodeBasicCreateVariable{}
+	v := dto.DiscountCodeBasicCreateVars{}
 	v.BasicCodeDiscount.Title = code
 	v.BasicCodeDiscount.CustomerGets.Value.Percentage = 0.1
 	v.BasicCodeDiscount.CustomerGets.Items.All = true
@@ -28,15 +30,15 @@ func TestDiscountCodeBasicCreate(t *testing.T) {
 	graphQL := newGraphQL(t)
 	resp, err := graphQL.DiscountCodeBasicCreate(context.Background(), v)
 	if assert.NoError(t, err) {
-		t.Log(resp.DiscountCodeBasicCreate.CodeDiscountNode.ID)
+		t.Log(resp.DiscountCodeBasicCreate.CodeDiscountNode.ID, code)
 	}
 
 	code = test.RandString(8)
-	v = DiscountCodeBasicCreateVariable{}
+	v = dto.DiscountCodeBasicCreateVars{}
 	v.BasicCodeDiscount.Code = code
 	v.BasicCodeDiscount.CustomerGets.Items.All = true
-	v.BasicCodeDiscount.CustomerGets.Value.DiscountAmount = &DiscountAmount{
-		Amount:            1,
+	v.BasicCodeDiscount.CustomerGets.Value.DiscountAmount = &types.DiscountAmountInput{
+		Amount:            "1",
 		AppliesOnEachItem: false,
 	}
 	v.BasicCodeDiscount.CustomerSelection.All = true
@@ -46,6 +48,6 @@ func TestDiscountCodeBasicCreate(t *testing.T) {
 	v.BasicCodeDiscount.UsageLimit = 1
 	resp, err = graphQL.DiscountCodeBasicCreate(context.Background(), v)
 	if assert.NoError(t, err) {
-		t.Log(resp.DiscountCodeBasicCreate.CodeDiscountNode.ID)
+		t.Log(resp.DiscountCodeBasicCreate.CodeDiscountNode.ID, code)
 	}
 }

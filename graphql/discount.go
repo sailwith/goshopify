@@ -2,69 +2,19 @@ package graphql
 
 import (
 	"context"
-	"time"
+	"fmt"
+
+	"github.com/sailwith/goshopify/graphql/dto"
 )
 
-const discountCodeBasicCreateQuery = `
-mutation discountCodeBasicCreate($basicCodeDiscount: DiscountCodeBasicInput!) {
-  discountCodeBasicCreate(basicCodeDiscount: $basicCodeDiscount) {
-    codeDiscountNode {
-      id
-    }
-    userErrors {
-      field
-      code
-      message
-    }
-  }
-}`
-
-type DiscountAmount struct {
-	Amount            float64 `json:"amount"`
-	AppliesOnEachItem bool    `json:"appliesOnEachItem"`
-}
-
-type DiscountCodeBasicCreateVariable struct {
-	BasicCodeDiscount struct {
-		Code         string `json:"code"`
-		CustomerGets struct {
-			Items struct {
-				All bool `json:"all"`
-			} `json:"items"`
-			Value struct {
-				DiscountAmount *DiscountAmount `json:"discountAmount,omitempty"`
-				Percentage     float64         `json:"percentage,omitempty"`
-			} `json:"value"`
-		} `json:"customerGets"`
-		CustomerSelection struct {
-			All bool `json:"all"`
-		} `json:"customerSelection"`
-		StartsAt               time.Time  `json:"startsAt"`
-		EndsAt                 *time.Time `json:"endsAt"`
-		Title                  string     `json:"title"`
-		AppliesOncePerCustomer bool       `json:"appliesOncePerCustomer"`
-		UsageLimit             int        `json:"usageLimit"`
-	} `json:"basicCodeDiscount"`
-}
-
-type DiscountCodeBasicCreateResponse struct {
-	DiscountCodeBasicCreate struct {
-		CodeDiscountNode struct {
-			ID string `json:"id"`
-		} `json:"codeDiscountNode"`
-		UserErrors []struct {
-			Field   []string `json:"field"`
-			Code    string   `json:"code"`
-			Message string   `json:"message"`
-		} `json:"userErrors"`
-	} `json:"discountCodeBasicCreate"`
-}
-
-func (g *GraphQL) DiscountCodeBasicCreate(ctx context.Context, variable DiscountCodeBasicCreateVariable) (*DiscountCodeBasicCreateResponse, error) {
-	resp := new(DiscountCodeBasicCreateResponse)
-	if err := g.client.GraphQL.Query(ctx, discountCodeBasicCreateQuery, variable, resp); err != nil {
+func (g *GraphQL) DiscountCodeBasicCreate(ctx context.Context, vars dto.DiscountCodeBasicCreateVars) (*dto.DiscountCodeBasicCreateResp, error) {
+	resp := dto.DiscountCodeBasicCreateResp{}
+	if err := g.client.GraphQL.Query(ctx, dto.DiscountCodeBasicCreateQuery, vars, &resp); err != nil {
 		return nil, err
 	}
+	if len(resp.DiscountCodeBasicCreate.UserErrors) > 0 {
+		return nil, fmt.Errorf("%v", resp.DiscountCodeBasicCreate.UserErrors)
+	}
 
-	return resp, nil
+	return &resp, nil
 }
