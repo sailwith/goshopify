@@ -8,6 +8,16 @@ import (
 
 type Shop = boldshopify.Shop
 
-func (r *REST) ShopGet(ctx context.Context) (*Shop, error) {
+type ShopResource struct {
+	client *boldshopify.Client
+}
+
+func NewShopResource(client *boldshopify.Client) *ShopResource {
+	return &ShopResource{
+		client: client,
+	}
+}
+
+func (r *ShopResource) Get(ctx context.Context) (*Shop, error) {
 	return r.client.Shop.Get(ctx, nil)
 }

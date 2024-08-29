@@ -10,12 +10,22 @@ import (
 
 type Theme = boldshopify.Theme
 
-func (r *REST) ThemeList(ctx context.Context) ([]Theme, error) {
+type ThemeResource struct {
+	client *boldshopify.Client
+}
+
+func NewThemeResource(client *boldshopify.Client) *ThemeResource {
+	return &ThemeResource{
+		client: client,
+	}
+}
+
+func (r *ThemeResource) List(ctx context.Context) ([]Theme, error) {
 	return r.client.Theme.List(ctx, nil)
 }
 
-func (r *REST) ThemeMain(ctx context.Context) (*Theme, error) {
-	themes, err := r.ThemeList(ctx)
+func (r *ThemeResource) Main(ctx context.Context) (*Theme, error) {
+	themes, err := r.List(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("error getting themes: %w", err)
 	}

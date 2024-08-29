@@ -10,7 +10,7 @@ import (
 
 func TestCustomerCreate(t *testing.T) {
 	rest := newREST(t)
-	customer, err := rest.CustomerCreate(context.Background(), Customer{
+	customer, err := rest.Customer.Create(context.Background(), Customer{
 		Email: test.RandString(8) + "@gmail.com",
 		EmailMarketingConsent: &EmailMarketingConsent{
 			State:      "subscribed",
@@ -27,7 +27,7 @@ func TestCustomerSearch(t *testing.T) {
 	assert.NoError(t, err)
 
 	rest := NewREST(client)
-	customers, err := rest.CustomerSearch(context.Background(), "email:111@gmail.com")
+	customers, err := rest.Customer.Search(context.Background(), "email:111@gmail.com")
 	if assert.NoError(t, err) {
 		t.Log(len(customers))
 	}
@@ -38,7 +38,7 @@ func TestCustomerUpdate(t *testing.T) {
 	assert.NoError(t, err)
 
 	rest := NewREST(client)
-	c, err := rest.CustomerUpdate(context.Background(), Customer{
+	c, err := rest.Customer.Update(context.Background(), Customer{
 		Id:        7233840578864,
 		FirstName: "first name",
 	})
@@ -52,7 +52,7 @@ func TestCustomerCreateOrUpdate(t *testing.T) {
 	assert.NoError(t, err)
 
 	rest := NewREST(client)
-	c, err := rest.CustomerCreateOrUpdate(context.Background(), Customer{
+	c, err := rest.Customer.CreateOrUpdate(context.Background(), Customer{
 		Email:    "111@gmail.com",
 		LastName: "last name",
 	})

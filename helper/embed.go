@@ -17,12 +17,12 @@ type settingsData struct {
 }
 
 func (h *Helper) IsAppEmbedded(ctx context.Context, blockID string) (bool, error) {
-	mainTheme, err := h.rest.ThemeMain(ctx)
+	mainTheme, err := h.rest.Theme.Main(ctx)
 	if err != nil {
 		return false, fmt.Errorf("error getting main theme: %w", err)
 	}
 
-	asset, err := h.rest.AssetGet(ctx, mainTheme.Id, "config/settings_data.json")
+	asset, err := h.rest.Asset.Get(ctx, mainTheme.Id, "config/settings_data.json")
 	if err != nil {
 		return false, fmt.Errorf("error getting asset: %w", err)
 	}

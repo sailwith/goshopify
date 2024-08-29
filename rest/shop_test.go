@@ -9,7 +9,7 @@ import (
 
 func TestShopGet(t *testing.T) {
 	rest := newREST(t)
-	shop, err := rest.ShopGet(context.Background())
+	shop, err := rest.Shop.Get(context.Background())
 	if assert.NoError(t, err) {
 		t.Log(shop.MyshopifyDomain)
 	}

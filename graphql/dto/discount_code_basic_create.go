@@ -9,8 +9,9 @@ mutation discountCodeBasicCreate($basicCodeDiscount: DiscountCodeBasicInput!) {
       id
     }
     userErrors {
+	  code
+	  extraInfo
       field
-      code
       message
     }
   }
@@ -22,7 +23,7 @@ type DiscountCodeBasicCreateVars struct {
 
 type DiscountCodeBasicCreateResp struct {
 	DiscountCodeBasicCreate struct {
-		CodeDiscountNode types.DiscountCodeNode `json:"codeDiscountNode"`
-		UserErrors       []types.UserError      `json:"userErrors"`
+		CodeDiscountNode types.DiscountCodeNode    `json:"codeDiscountNode"`
+		UserErrors       []types.DiscountUserError `json:"userErrors"`
 	} `json:"discountCodeBasicCreate"`
 }

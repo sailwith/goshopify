@@ -8,6 +8,16 @@ import (
 
 type Asset = boldshopify.Asset
 
-func (r *REST) AssetGet(ctx context.Context, themeID uint64, key string) (*Asset, error) {
+type AssetResource struct {
+	client *boldshopify.Client
+}
+
+func NewAssetResource(client *boldshopify.Client) *AssetResource {
+	return &AssetResource{
+		client: client,
+	}
+}
+
+func (r *AssetResource) Get(ctx context.Context, themeID uint64, key string) (*Asset, error) {
 	return r.client.Asset.Get(ctx, themeID, key)
 }
