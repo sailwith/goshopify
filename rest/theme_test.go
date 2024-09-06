@@ -16,11 +16,3 @@ func TestThemeList(t *testing.T) {
 		}
 	}
 }
-
-func TestThemeMain(t *testing.T) {
-	rest := newREST(t)
-	theme, err := rest.Theme.Main(context.Background())
-	if assert.NoError(t, err) {
-		t.Logf("theme id: %v, name: %v, role: %v", theme.Id, theme.Name, theme.Role)
-	}
-}

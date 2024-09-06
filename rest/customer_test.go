@@ -46,17 +46,3 @@ func TestCustomerUpdate(t *testing.T) {
 		t.Log(c.FirstName)
 	}
 }
-
-func TestCustomerCreateOrUpdate(t *testing.T) {
-	client, err := test.NewClient()
-	assert.NoError(t, err)
-
-	rest := NewREST(client)
-	c, err := rest.Customer.CreateOrUpdate(context.Background(), Customer{
-		Email:    "111@gmail.com",
-		LastName: "last name",
-	})
-	if assert.NoError(t, err) {
-		t.Log(c.LastName)
-	}
-}

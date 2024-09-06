@@ -17,7 +17,7 @@ type settingsData struct {
 }
 
 func (h *Helper) IsAppEmbedded(ctx context.Context, blockID string) (bool, error) {
-	mainTheme, err := h.rest.Theme.Main(ctx)
+	mainTheme, err := h.MainTheme(ctx)
 	if err != nil {
 		return false, fmt.Errorf("error getting main theme: %w", err)
 	}
